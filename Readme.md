@@ -67,6 +67,13 @@ flowchart TD
 ```
 
 En el fichero [recorrerTablero.py](recorrerTablero.py) se encuentra la implementación en Python del segundo diagrama.
+
+### Apartado 3: posibles funciones
+
+1.- `contar_fichas_blancas(t)`: Cuenta y devuelve el número de fichas blancas en el tablero `t`.
+2.- `contar_fichas_negras(t)`: Cuenta y devuelve el número de fichas negras en el tablero `t`.
+3.- `vaGanando(t)`: Determina qué color de fichas va ganando en el tablero `t` y devuelve una cadena indicando el resultado ("Blancas van ganando", "Negras van ganando" o "Empate").
+4.- `vaGanando2(blancas, negras)`: Similar a `vaGanando`, pero toma como parámetros el número de fichas blancas y negras en lugar del tablero completo. Devuelve una cadena indicando el resultado.
     
 # Solución: Parte Depuración
 
