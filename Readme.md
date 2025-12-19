@@ -1,11 +1,81 @@
-# Solución: Examen de Depuración en PyCharm
+# Solución: Parte Diagramas
 
-Apartado 1
+### Apartado 1: Recorrer tablero y mostrar estado de casillas </summary>
+
+```mermaid
+flowchart TD
+  Inicio([Inicio]) --> InicializarTablero["t[8][8]"]
+  InicializarTablero --> Inicializar["fila = 0, col = 0"]
+  Inicializar --> ComprobarFila{fila < 8 ?}
+  ComprobarFila -- Sí --> SetCol["col = 0"]
+  SetCol --> ComprobarCol{col < 8 ?}
+
+  ComprobarCol -- Sí --> EsOcupada{"t[fila][col] ≠ 'vacía' ?"}
+  EsOcupada -- Sí --> EsBlanco{"t[fila][col] == 'blanco' ?"}
+  EsBlanco -- Sí --> MostrarBlanco["Mostrar: (fila,col) - Blanco"]
+  EsBlanco -- No --> MostrarNegro["Mostrar: (fila, col) - Negra"]
+  EsOcupada -- No --> MostrarVacia["Mostrar: (fila, col) - Vacía"]
+
+  MostrarBlanco --> IncColumna["col = col + 1"]
+  MostrarNegro --> IncColumna
+  MostrarVacia --> IncColumna
+  IncColumna --> ComprobarCol
+
+  ComprobarCol -- No --> IncFila["fila = fila + 1"]
+  IncFila --> ComprobarFila
+
+  ComprobarFila -- No --> Fin([Fin])
+```
+
+### Apartado 2: Calcular quien va ganando
+
+Inicializamos dos variables para contar las piezas blancas y negras (`n_blancas = 0, n_negras = 0`).
+
+El diagrama es igual al anterior, después de la comprobación, después del `SI` de las fichas blancas y negras incrementamos los contadores (`n_blancas++; n_negras++`).
+
+Al final del recorrido, antes del `FIN` comparamos los contadores y mostramos el resultado.
+
+```mermaid
+flowchart TD
+    Inicio([Inicio]) --> InicializarContadores["n_blancas = 0, n_negras = 0"]
+    InicializarContadores --> Inicializar["fila = 0, col = 0"]
+    Inicializar --> ComprobarFila{fila < 8 ?}
+    ComprobarFila -- Sí --> SetCol["col = 0"]
+    SetCol --> ComprobarCol{col < 8 ?}
+    ComprobarCol -- Sí --> EsOcupada{"t[fila][col] ≠ 'vacía' ?"}
+    EsOcupada -- Sí --> EsBlanco{"t[fila][col] == 'blanco' ?"}
+    EsBlanco -- Sí --> MostrarBlanco["Mostrar: (fila,col) - Blanco"]
+    MostrarBlanco --> IncrementarBlancas["n_blancas = n_blancas + 1"]
+    EsBlanco -- No --> MostrarNegro["Mostrar: (fila, col) - Negra"]
+    MostrarNegro --> IncrementarNegras["n_negras = n_negras + 1"]
+    EsOcupada -- No --> MostrarVacia["Mostrar: (fila, col) - Vacía"]
+    IncrementarBlancas --> IncColumna["col = col + 1"]
+    IncrementarNegras --> IncColumna
+    MostrarVacia --> IncColumna
+    IncColumna --> ComprobarCol
+    ComprobarCol -- No --> IncFila["fila = fila + 1"]
+    IncFila --> ComprobarFila
+    ComprobarFila -- No --> Comparar{"n_blancas > n_negras ?"}
+    Comparar -- Sí --> MostrarGanadorBlancas["Mostrar: 'Blancas van ganando'"]
+    Comparar -- No --> CompararEmpate{"n_negras > n_blancas ?"}
+    CompararEmpate -- Sí --> MostrarGanadorNegras["Mostrar: 'Negras van ganando'"]
+    CompararEmpate -- No --> MostrarEmpate["Mostrar: 'Empate'"]
+    MostrarGanadorBlancas --> Fin([Fin])
+    MostrarGanadorNegras --> Fin
+    MostrarEmpate --> Fin
+
+```
+
+En el fichero [recorrerTablero.py](recorrerTablero.py) se encuentra la implementación en Python del segundo diagrama.
+    
+# Solución: Parte Depuración
+
+### Apartado 1
 
 Respuesta 1:
 - 10
 
-Apartado 2
+### Apartado 2
 
 Pregunta 2.1:
 - Valor de `aux`: 1
@@ -19,12 +89,12 @@ Pregunta 2.3
    - Step Over: ejecuta la llamada completa sin entrar en la función.
    - Step Into: entra dentro de la función y permite depurar sus líneas internas.
 
-Apartado 3
+### Apartado 3
 
 Pregunta 3.1:
 - Longitud de `serie` cuando el breakpoint condicional `siguiente_numero > 20000` se activa por primera vez: 23
 
-Apartado 4
+Apartado 4 (no fue incluido en el examen)
 
 Pregunta 4.1:
 - Contenido final de `serie`: [0, 1, 1, 2, 3]
